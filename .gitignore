@@ -1,0 +1,24 @@
+# Secrets
+.env
+.env.*
+!.env.telegram.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Local runtime/state artifacts
+state*.json
+manual_execution*.log
+dryrun*.log
+telegram_runtime_state.json
+
+# System/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Archives
+*.zip

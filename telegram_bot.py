@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 import asyncio
 import json
-import math
 import os
 import re
 import subprocess
 import time
+from decimal import Decimal, ROUND_CEILING
 from html import escape as html_escape
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -148,6 +148,12 @@ def _compact_leg_name(s: Any, max_words: int = 2, max_len: int = 30) -> str:
     return txt[: max_len - 3].rstrip() + "..."
 
 
+def _ceil_percent(value: float) -> int:
+    # Use Decimal to avoid float precision edge cases when applying ceil.
+    pct = Decimal(str(value)) * Decimal("100")
+    return int(pct.to_integral_value(rounding=ROUND_CEILING))
+
+
 def _candidate_line(c: Dict[str, Any]) -> str:
     status = str(c.get("status") or "unknown")
     idx = int(c.get("idx") or 0)
@@ -207,7 +213,7 @@ def _candidate_view(c: Dict[str, Any]) -> Dict[str, Any]:
         "b_name": b_name,
         "a_size": a_size,
         "b_size": b_size,
-        "a_vwap_pct": math.ceil(a_vwap * 100.0),
+        "a_vwap_pct": _ceil_percent(a_vwap),
         "b_vwap_pct": b_vwap * 100.0,
         "edge_pct": edge * 100.0,
     }

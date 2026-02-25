@@ -214,7 +214,7 @@ def _candidate_view(c: Dict[str, Any]) -> Dict[str, Any]:
         "a_size": a_size,
         "b_size": b_size,
         "a_vwap_pct": _ceil_percent(a_vwap),
-        "b_vwap_pct": b_vwap * 100.0,
+        "b_vwap_pct": _ceil_percent(b_vwap),
         "edge_pct": edge * 100.0,
     }
 
@@ -264,7 +264,7 @@ def _render_snapshot_report(
                 "",
                 f"<b>[{r['idx']}]</b> {name_line}",
                 f"💰 Cost: ${r['total_cost']:,.2f} | 📈 Edge: {r['edge_pct']:.2f}%",
-                f"🔵 A: {html_escape(r['a_name'])} — {r['a_size']:,.2f} @ {r['a_vwap_pct']:.0f}",
+                f"🔵 A: {html_escape(r['a_name'])} — {r['a_size']:,.2f} @ {r['a_vwap_pct']:.2f}",
                 f"🟠 B: {html_escape(r['b_name'])} — {r['b_size']:,.2f} @ {r['b_vwap_pct']:.2f}",
             ]
         )
